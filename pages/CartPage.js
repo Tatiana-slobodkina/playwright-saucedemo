@@ -10,10 +10,10 @@ class CartPage extends BasePage {
   constructor(page) {
     super(page);
     this.header = new Header(page);
-    this.cartList = page.getByTestId('cart-list');
-    this.items = this.cartList.getByTestId('inventory-item');
-    this.itemNames = this.cartList.getByTestId('inventory-item-name');
-    this.itemQuantities = this.cartList.getByTestId('item-quantity');
+    this.cartList = page.locator('[data-test="cart-list"]');
+    this.items = this.cartList.locator('[data-test="inventory-item"]');
+    this.itemNames = this.cartList.locator('[data-test="inventory-item-name"]');
+    this.itemQuantities = this.cartList.locator('[data-test="item-quantity"]');
     this.checkoutButton = page.getByTestId('checkout');
   }
 

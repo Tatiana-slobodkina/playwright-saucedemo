@@ -9,7 +9,7 @@ class CheckoutCompletePage extends BasePage {
   constructor(page) {
     super(page);
     this.header = new Header(page);
-    this.completeHeader = page.getByTestId('complete-header');
+    this.completeHeader = page.locator('[data-test="complete-header"]');
     this.backToProductsButton = page.getByTestId('back-to-products');
   }
 

@@ -19,11 +19,11 @@ class InventoryPage extends BasePage {
   constructor(page) {
     super(page);
     this.header = new Header(page);
-    this.title = page.getByTestId('title');
-    this.sortSelect = page.getByTestId('product-sort-container');
-    this.items = page.getByTestId('inventory-item');
-    this.itemNames = page.getByTestId('inventory-item-name');
-    this.itemPrices = page.getByTestId('inventory-item-price');
+    this.title = page.locator('[data-test="title"]');
+    this.sortSelect = page.locator('[data-test="product-sort-container"]');
+    this.items = page.locator('[data-test="inventory-item"]');
+    this.itemNames = page.locator('[data-test="inventory-item-name"]');
+    this.itemPrices = page.locator('[data-test="inventory-item-price"]');
   }
 
   async open() {
@@ -43,7 +43,7 @@ class InventoryPage extends BasePage {
 
   /** @param {import('@playwright/test').Locator} item */
   itemPrice(item) {
-    return item.getByTestId('inventory-item-price');
+    return item.locator('[data-test="inventory-item-price"]');
   }
 
   /** @param {string} name */

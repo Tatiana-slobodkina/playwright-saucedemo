@@ -8,10 +8,10 @@ class CheckoutOverviewPage extends BasePage {
   /** @param {import('@playwright/test').Page} page */
   constructor(page) {
     super(page);
-    this.itemPrices = page.getByTestId('inventory-item-price');
-    this.subtotalLabel = page.getByTestId('subtotal-label');
-    this.taxLabel = page.getByTestId('tax-label');
-    this.totalLabel = page.getByTestId('total-label');
+    this.itemPrices = page.locator('[data-test="inventory-item-price"]');
+    this.subtotalLabel = page.locator('[data-test="subtotal-label"]');
+    this.taxLabel = page.locator('[data-test="tax-label"]');
+    this.totalLabel = page.locator('[data-test="total-label"]');
     this.finishButton = page.getByTestId('finish');
   }
 

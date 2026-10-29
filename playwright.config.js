@@ -9,7 +9,7 @@ module.exports = defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: 'https://www.saucedemo.com',
-    testIdAttribute: 'data-test',
+    testIdAttribute: 'id',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },

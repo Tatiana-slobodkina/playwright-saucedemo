@@ -7,11 +7,11 @@ class CheckoutInfoPage extends BasePage {
   /** @param {import('@playwright/test').Page} page */
   constructor(page) {
     super(page);
-    this.firstName = page.getByTestId('firstName');
-    this.lastName = page.getByTestId('lastName');
-    this.postalCode = page.getByTestId('postalCode');
+    this.firstName = page.getByTestId('first-name');
+    this.lastName = page.getByTestId('last-name');
+    this.postalCode = page.getByTestId('postal-code');
     this.continueButton = page.getByTestId('continue');
-    this.error = page.getByTestId('error');
+    this.error = page.locator('[data-test="error"]');
   }
 
   /** @param {{ firstName: string, lastName: string, postalCode: string }} customer */

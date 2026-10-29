@@ -8,11 +8,11 @@ class LoginPage extends BasePage {
   /** @param {import('@playwright/test').Page} page */
   constructor(page) {
     super(page);
-    this.username = page.getByTestId('username');
+    this.username = page.getByTestId('user-name');
     this.password = page.getByTestId('password');
     this.loginButton = page.getByTestId('login-button');
-    this.error = page.getByTestId('error');
-    this.errorCloseButton = page.getByTestId('error-button');
+    this.error = page.locator('[data-test="error"]');
+    this.errorCloseButton = page.locator('[data-test="error-button"]');
   }
 
   async open() {
