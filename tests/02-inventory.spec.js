@@ -2,10 +2,12 @@
 const { test, expect } = require('../fixtures/pages.fixture');
 const { SORT } = require('../pages');
 const { PRODUCTS, PRODUCT_NAMES, PRICES_LOW_TO_HIGH } = require('../test-data/products');
+const { BUTTONS } = require('../test-data/texts');
+const { formatPrice } = require('../utils/priceParser');
 
 test.describe('Inventory', () => {
   test('TC-04 shows the full list of product names', async ({ loggedIn: inventoryPage }) => {
-    await expect(inventoryPage.itemNames).toHaveCount(6);
+    await expect(inventoryPage.itemNames).toHaveCount(PRODUCT_NAMES.length);
     await expect(inventoryPage.itemNames).toHaveText(PRODUCT_NAMES);
   });
 
@@ -37,22 +39,24 @@ test.describe('Inventory', () => {
   });
 
   test('TC-07 finds a card by name and works inside it', async ({ loggedIn: inventoryPage }) => {
-    const card = inventoryPage.item(PRODUCTS.fleeceJacket.name);
+    const added = [PRODUCTS.fleeceJacket];
+    const [product] = added;
+    const card = inventoryPage.item(product.name);
     const button = inventoryPage.itemButton(card);
 
-    await expect(inventoryPage.itemPrice(card)).toHaveText('$49.99');
+    await expect(inventoryPage.itemPrice(card)).toHaveText(formatPrice(product.price));
     await button.click();
 
-    await expect(button).toHaveText('Remove');
-    await expect(inventoryPage.header.cartBadge).toHaveText('1');
+    await expect(button).toHaveText(BUTTONS.REMOVE);
+    await expect(inventoryPage.header.cartBadge).toHaveText(String(added.length));
   });
 
   test('TC-08 adds all products to the cart in a loop', async ({ loggedIn: inventoryPage }) => {
     await inventoryPage.addAllToCart();
 
-    await expect(inventoryPage.header.cartBadge).toHaveText('6');
+    await expect(inventoryPage.header.cartBadge).toHaveText(String(PRODUCT_NAMES.length));
     for (const card of await inventoryPage.items.all()) {
-      await expect(inventoryPage.itemButton(card)).toHaveText('Remove');
+      await expect(inventoryPage.itemButton(card)).toHaveText(BUTTONS.REMOVE);
     }
   });
 });

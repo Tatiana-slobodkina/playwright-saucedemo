@@ -9,6 +9,7 @@ const {
   CheckoutCompletePage,
 } = require('../pages');
 const { STANDARD_USER } = require('../test-data/users');
+const { URL_PATTERNS } = require('../test-data/urls');
 
 /**
  * @typedef {{
@@ -51,7 +52,7 @@ const test = base.test.extend({
   loggedIn: async ({ page, loginPage, inventoryPage }, use) => {
     await loginPage.open();
     await loginPage.login(STANDARD_USER.username, STANDARD_USER.password);
-    await base.expect(page).toHaveURL(InventoryPage.urlPattern);
+    await base.expect(page).toHaveURL(URL_PATTERNS.INVENTORY);
     await use(inventoryPage);
   },
 });

@@ -3,7 +3,6 @@ const { BasePage } = require('./BasePage');
 const { Header } = require('./components/Header');
 
 class CheckoutCompletePage extends BasePage {
-  static urlPattern = /\/checkout-complete\.html$/;
 
   /** @param {import('@playwright/test').Page} page */
   constructor(page) {

@@ -2,7 +2,6 @@
 const { BasePage } = require('./BasePage');
 
 class CheckoutInfoPage extends BasePage {
-  static urlPattern = /\/checkout-step-one\.html$/;
 
   /** @param {import('@playwright/test').Page} page */
   constructor(page) {

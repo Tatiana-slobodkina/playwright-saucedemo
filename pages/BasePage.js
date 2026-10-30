@@ -5,11 +5,6 @@ class BasePage {
   constructor(page) {
     this.page = page;
   }
-
-  /** @param {string} path */
-  async goto(path) {
-    await this.page.goto(path);
-  }
 }
 
 module.exports = { BasePage };

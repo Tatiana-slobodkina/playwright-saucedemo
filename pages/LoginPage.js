@@ -3,7 +3,6 @@ const { BasePage } = require('./BasePage');
 
 class LoginPage extends BasePage {
   static path = '/';
-  static urlPattern = /saucedemo\.com\/?$/;
 
   /** @param {import('@playwright/test').Page} page */
   constructor(page) {
@@ -16,7 +15,7 @@ class LoginPage extends BasePage {
   }
 
   async open() {
-    await this.goto(LoginPage.path);
+    await this.page.goto(LoginPage.path);
   }
 
   /**

@@ -4,7 +4,6 @@ const { Header } = require('./components/Header');
 
 class CartPage extends BasePage {
   static path = '/cart.html';
-  static urlPattern = /\/cart\.html$/;
 
   /** @param {import('@playwright/test').Page} page */
   constructor(page) {

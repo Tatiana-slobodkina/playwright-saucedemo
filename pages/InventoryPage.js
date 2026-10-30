@@ -1,7 +1,8 @@
 // @ts-check
 const { BasePage } = require('./BasePage');
 const { Header } = require('./components/Header');
-const { parsePrice } = require('../utils/price');
+const { parsePrice } = require('../utils/priceParser');
+const { BUTTONS } = require('../test-data/texts');
 
 /** Option labels of the product-sort-container select. */
 const SORT = {
@@ -13,7 +14,6 @@ const SORT = {
 
 class InventoryPage extends BasePage {
   static path = '/inventory.html';
-  static urlPattern = /\/inventory\.html$/;
 
   /** @param {import('@playwright/test').Page} page */
   constructor(page) {
@@ -24,10 +24,6 @@ class InventoryPage extends BasePage {
     this.items = page.locator('[data-test="inventory-item"]');
     this.itemNames = page.locator('[data-test="inventory-item-name"]');
     this.itemPrices = page.locator('[data-test="inventory-item-price"]');
-  }
-
-  async open() {
-    await this.goto(InventoryPage.path);
   }
 
   /** @param {string} name */
@@ -48,7 +44,7 @@ class InventoryPage extends BasePage {
 
   /** @param {string} name */
   async addToCart(name) {
-    await this.item(name).getByRole('button', { name: 'Add to cart' }).click();
+    await this.item(name).getByRole('button', { name: BUTTONS.ADD_TO_CART }).click();
   }
 
   /** @param {string[]} names */
@@ -61,7 +57,7 @@ class InventoryPage extends BasePage {
   async addAllToCart() {
     await this.items.first().waitFor();
     for (const item of await this.items.all()) {
-      await item.getByRole('button', { name: 'Add to cart' }).click();
+      await item.getByRole('button', { name: BUTTONS.ADD_TO_CART }).click();
     }
   }
 

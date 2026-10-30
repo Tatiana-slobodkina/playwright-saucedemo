@@ -16,4 +16,7 @@ const PRICES_LOW_TO_HIGH = [7.99, 9.99, 15.99, 15.99, 29.99, 49.99];
 
 const TAX_RATE = 0.08;
 
-module.exports = { PRODUCTS, PRODUCT_NAMES, PRICES_LOW_TO_HIGH, TAX_RATE };
+/** Cart quantity of a product after one "Add to cart" click. */
+const DEFAULT_QUANTITY = 1;
+
+module.exports = { PRODUCTS, PRODUCT_NAMES, PRICES_LOW_TO_HIGH, TAX_RATE, DEFAULT_QUANTITY };

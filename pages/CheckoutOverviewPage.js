@@ -1,9 +1,8 @@
 // @ts-check
 const { BasePage } = require('./BasePage');
-const { parsePrice } = require('../utils/price');
+const { parsePrice } = require('../utils/priceParser');
 
 class CheckoutOverviewPage extends BasePage {
-  static urlPattern = /\/checkout-step-two\.html$/;
 
   /** @param {import('@playwright/test').Page} page */
   constructor(page) {

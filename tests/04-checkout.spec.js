@@ -1,29 +1,31 @@
 // @ts-check
 const { test, expect } = require('../fixtures/pages.fixture');
-const { CheckoutInfoPage, CheckoutOverviewPage, CheckoutCompletePage, InventoryPage } = require('../pages');
+const { URL_PATTERNS } = require('../test-data/urls');
+const { TITLES } = require('../test-data/texts');
 const { PRODUCTS, TAX_RATE } = require('../test-data/products');
 const { CUSTOMER, INVALID_CUSTOMERS } = require('../test-data/checkout');
-const { sum } = require('../utils/price');
+const { PRICE_DECIMALS, formatPrice, sum } = require('../utils/priceParser');
 
 test.describe('Checkout', () => {
   test('TC-11 calculates item total, tax and total', async ({ page, loggedIn: inventoryPage, cartPage, checkoutInfoPage, checkoutOverviewPage }) => {
-    await inventoryPage.addManyToCart([PRODUCTS.backpack.name, PRODUCTS.bikeLight.name, PRODUCTS.onesie.name]);
+    const added = [PRODUCTS.backpack.name, PRODUCTS.bikeLight.name, PRODUCTS.onesie.name];
+    await inventoryPage.addManyToCart(added);
     await inventoryPage.header.openCart();
     await cartPage.checkout();
     await checkoutInfoPage.submit(CUSTOMER);
-    await expect(page).toHaveURL(CheckoutOverviewPage.urlPattern);
+    await expect(page).toHaveURL(URL_PATTERNS.CHECKOUT_OVERVIEW);
 
     const prices = await checkoutOverviewPage.getItemPrices();
-    expect(prices).toHaveLength(3);
+    expect(prices).toHaveLength(added.length);
     const itemTotal = sum(prices);
 
-    await expect(checkoutOverviewPage.subtotalLabel).toHaveText(`Item total: $${itemTotal.toFixed(2)}`);
+    await expect(checkoutOverviewPage.subtotalLabel).toHaveText(`Item total: ${formatPrice(itemTotal)}`);
 
     const tax = await checkoutOverviewPage.getTax();
-    expect(tax).toBeCloseTo(itemTotal * TAX_RATE, 2);
+    expect(tax).toBeCloseTo(itemTotal * TAX_RATE, PRICE_DECIMALS);
 
     const total = await checkoutOverviewPage.getTotal();
-    expect(total).toBeCloseTo(itemTotal + tax, 2);
+    expect(total).toBeCloseTo(itemTotal + tax, PRICE_DECIMALS);
   });
 
   test.describe('TC-12 checkout form validation', () => {
@@ -38,7 +40,7 @@ test.describe('Checkout', () => {
         await checkoutInfoPage.submit(customer);
 
         await expect(checkoutInfoPage.error).toHaveText(message);
-        await expect(page).toHaveURL(CheckoutInfoPage.urlPattern);
+        await expect(page).toHaveURL(URL_PATTERNS.CHECKOUT_INFO);
       });
     }
   });
@@ -50,11 +52,11 @@ test.describe('Checkout', () => {
     await checkoutInfoPage.submit(CUSTOMER);
     await checkoutOverviewPage.finish();
 
-    await expect(page).toHaveURL(CheckoutCompletePage.urlPattern);
-    await expect(checkoutCompletePage.completeHeader).toHaveText('Thank you for your order!');
-    await expect(checkoutCompletePage.header.cartBadge).toHaveCount(0);
+    await expect(page).toHaveURL(URL_PATTERNS.CHECKOUT_COMPLETE);
+    await expect(checkoutCompletePage.completeHeader).toHaveText(TITLES.ORDER_COMPLETE);
+    await expect(checkoutCompletePage.header.cartBadge).toBeHidden();
 
     await checkoutCompletePage.backToProducts();
-    await expect(page).toHaveURL(InventoryPage.urlPattern);
+    await expect(page).toHaveURL(URL_PATTERNS.INVENTORY);
   });
 });
